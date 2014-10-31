@@ -1,4 +1,4 @@
-*** M7M CPU miner by Nonce-Pool *** ./autogen.sh && ./configure CFLAGS="-O3" && make
+This is a multi-threaded CPU pool miner for M7M/Magi (XMG) by Nonce-Pool.
 
 License: GPLv2.  See COPYING for details.
 
@@ -7,12 +7,15 @@ Git tree:   https://github.com/pooler/cpuminer
 
 Dependencies:
 	libcurl			http://curl.haxx.se/libcurl/
+	libgmp			http://gmplib.org/
+	openssl			http://www.openssl.org/
 	jansson			http://www.digip.org/jansson/
-		(jansson is included in-tree)
+	(jansson is optional, and is included in-tree)
 
 Basic *nix build instructions:
-	./autogen.sh	# only needed if building from git repo
-	./nomacro.pl	# only needed if building on Mac OS X or with Clang
+	./autogen.sh && ./configure CFLAGS="-O3" CXXFLAGS="-O3" && make
+	./autogen.sh		# only needed if building from git repo
+	./nomacro.pl		# only needed if building on Mac OS X or with Clang
 	./configure CFLAGS="-O3" CXXFLAGS="-O3"
 	make
 
@@ -65,3 +68,11 @@ and all_proxy environment variables.
 Also many issues and FAQs are covered in the forum thread
 dedicated to this program,
 	https://bitcointalk.org/index.php?topic=55038.0
+
+Solo mining:
+	./minerd --url http://127.0.0.1:RPCPORT/ --user RPCUSER --pass RPCPASSWORD --threads thread_numbers
+
+Pool mining:
+	./minerd -a m7m -o stratum+tcp://pool_url:pool_port -u pool_user.worker -p password -t thread_numbers
+	
+Scrypts: magi-minerd.sh, magi-minerd.bat; change rpcport, rpc user and pass accordinly. 
